@@ -21,12 +21,12 @@ class LLMHandler:
         if process.returncode != 0:
             raise RuntimeError(f"Ollama Error: {stderr}")
 
-        # STEP 1: Try to extract the last triple-backtick code block
+        
         matches = re.findall(r"```(?:python)?\s*([\s\S]*?)```", stdout, re.IGNORECASE)
         if matches:
             return matches[-1].strip()
 
-        # STEP 2: Fallback – strip out explanation lines before they begin
+        
         lines = stdout.splitlines()
         code_lines = []
         explanation_keywords = ("step", "explanation", "here's", "run this", "note:", "description")
@@ -37,5 +37,5 @@ class LLMHandler:
             code_lines.append(line)
 
         return "\n".join(code_lines).strip()
-
-
+    
+    
